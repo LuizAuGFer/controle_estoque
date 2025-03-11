@@ -1,31 +1,34 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import DataTable from 'datatables.net-vue3'
-import Select from 'datatables.net-select';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import PrimaryCard from '@/Components/PrimaryCard.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/InputError.vue';
 
-DataTable.use(Select);
+import { Head } from "@inertiajs/vue3";
+import { usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 
-const data = [
-  ["Ana", 24, "ana@gmail.com", "ksd"],
-  ["Paulo Santos", 44, "paulo@gmail.com", "ass"],
-  ["Ricardo Soares", 67, "ricardo@gmail.com", 9823],
-];
+const page = usePage();
+const company = page.props.company;
+
+const form = useForm({
+    companyName: '',
+});
 
 </script>
 
 <style>
-@import 'datatables.net-dt';
+@import "datatables.net-dt";
 </style>
 <template>
-
   <Head title="Dashboard" />
 
   <AuthenticatedLayout>
     <div class="row">
-      <div class="col-12">
+      <div v-if="company" class="col-12">
         <div class="container">
-
           <div class="row mb-3 mt-3">
             <div class="col-sm-6">
               <h3 class="mb-0">Título da página</h3>
@@ -33,33 +36,26 @@ const data = [
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-end">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Unfixed Layout</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Unfixed Layout
+                </li>
               </ol>
             </div>
           </div>
-
-          <div class="card card-primary card-outline mb-4">
-            <div class="card-header">
-              <div class="card-title">Mostrando informações dos usuários</div>
-            </div>
-            <div class="card-body">
-              <DataTable :data="data" class="display">
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Idade</th>
-                    <th>Email</th>
-                    <th>Código</th>
-                  </tr>
-                </thead>
-              </DataTable>
-            </div>
-          </div>
-
         </div>
       </div>
 
+      <div v-else="company">
+        <h2 class="mt-3">Informe o nome da sua empresa para começar! 🚀</h2>
+        <PrimaryCard title="Criando sua primeira empresa!" >
+          <InputLabel for="companyName" value="Nome:" />
+          <TextInput id="companyName" ref="companyName" v-model="form.companyName" type="text" autocomplete="name" />
+          <InputError :message="form.errors.name" class="mt-2" />
+          <template #footer>
+            <PrimaryButton :disabled="form.processing">Salvar</PrimaryButton>
+          </template>
+        </PrimaryCard >
+      </div>
     </div>
-
   </AuthenticatedLayout>
 </template>
