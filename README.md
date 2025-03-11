@@ -24,8 +24,10 @@
 
 ### For first time only !
 - `git clone https://github.com/refactorian/laravel-docker.git`
-- `cd laravel-docker`
+- `cd controle_estoque`
 - `docker compose up -d --build`
+- `npm install`
+- `npm run dev`
 - `docker compose exec php bash`
 - `composer setup`
 
