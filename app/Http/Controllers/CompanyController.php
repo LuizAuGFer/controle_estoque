@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -12,7 +13,7 @@ class CompanyController extends Controller
     public function dashboard()
     {
         $company = Company::where('user_id', \Auth::user()->id)->first();
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', compact('company'));
     }
     /**
      * Display a listing of the resource.
@@ -33,9 +34,15 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
-        //
+        $company = new Company;
+
+        $company->name = request()->name;
+        $company->user_id = \Auth::user()->id;
+        $company->save();
+
+        return redirect()->route('dashboard')->with('message', trans('messages.updated_successfully'))->with('type', 'success');
     }
 
     /**

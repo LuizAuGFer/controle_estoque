@@ -12,11 +12,25 @@ import { useForm } from '@inertiajs/vue3';
 
 const page = usePage();
 const company = page.props.company;
+console.log(company)
 
-const form = useForm({
-    companyName: '',
+
+const companyForm = useForm({
+  name: '',
 });
 
+
+const createCompany = () => {
+  companyForm.post(route('company.store'), {
+    preserveScroll: true,
+    onSuccess: () => {
+      companyForm.reset();
+    },
+    onError: () => {
+    
+    },
+  });
+}
 </script>
 
 <style>
@@ -45,15 +59,17 @@ const form = useForm({
         </div>
       </div>
 
-      <div v-else="company">
+      <div v-else="company != null">
         <h2 class="mt-3">Informe o nome da sua empresa para começar! 🚀</h2>
         <PrimaryCard title="Criando sua primeira empresa!" >
-          <InputLabel for="companyName" value="Nome:" />
-          <TextInput id="companyName" ref="companyName" v-model="form.companyName" type="text" autocomplete="name" />
-          <InputError :message="form.errors.name" class="mt-2" />
-          <template #footer>
-            <PrimaryButton :disabled="form.processing">Salvar</PrimaryButton>
-          </template>
+          <form @submit.prevent="createCompany" class="mt-6 space-y-6">
+            <InputLabel for="name" value="Nome:" />
+            <TextInput id="name" ref="name" v-model="companyForm.name" type="text" autocomplete="name" />
+            <InputError :message="companyForm.errors.name" class="mt-2" />
+            <div class="text-end mt-3">
+              <PrimaryButton :disabled="companyForm.processing">Salvar</PrimaryButton>
+            </div>
+          </form>
         </PrimaryCard >
       </div>
     </div>

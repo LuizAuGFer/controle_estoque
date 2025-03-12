@@ -37,6 +37,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy',                   [ExampleController::class, 'destroy'])->name('example.destroy'); 
     });
 
+    // Company
+    Route::group(['prefix' => 'example'], function () {
+        Route::post('/',                             [CompanyController::class, 'store'])->name('company.store');
+    });
+
 });
 
 require __DIR__.'/auth.php';

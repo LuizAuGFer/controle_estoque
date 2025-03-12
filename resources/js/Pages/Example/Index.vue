@@ -32,13 +32,11 @@ const confirmingDeletion = ref(false);
 
 function defineExampleId(id){
   exampleId.value = id;
-  console.log(exampleId.value, id);
   confirmingDeletion.value = true;
 }
 
 function removeRow() {
   document.getElementById("example" + exampleId.value).classList.add("d-none");
-  console.log("example" + exampleId.value);
 }
 
 const closeModal = () => {

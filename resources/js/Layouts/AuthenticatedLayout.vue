@@ -10,7 +10,6 @@ import { createPopper } from '@popperjs/core';
 import ThemeChanger from '@/Components/ThemeChanger.vue';
 import Sidebar from '@/Components/Layout/Sidebar.vue';
 
-import { onMounted, watch } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { data } from 'autoprefixer';
 </script>
@@ -130,7 +129,6 @@ import { data } from 'autoprefixer';
             <!--begin::Copyright-->
             <strong>
                 Copyright &copy; 2014-2024&nbsp;
-                <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
             </strong>
             All rights reserved.
             <!--end::Copyright-->
